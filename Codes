@@ -1,4 +1,214 @@
-###Confirmation for New users
+User login 
+<apex:page controller="LoginPages" showHeader="false" sidebar="false" standardStylesheets="true">
+<apex:pagemessages ></apex:pagemessages>
+    <apex:stylesheet value="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"/>
+<apex:form >
+<apex:pageBlock >
+<div align="Center">
+<apex:outputtext value="Customer Login" style="font-size:26px; color:red; "/><BR/>
+    </div>
+        <apex:pageBlockSection showHeader="True" title="Please enter your credentials or click Register" columns="1" collapsible="False">
+<label>User Name</label>
+<apex:inputText id="username" value="{!username}"/>
+<br/>
+<label>Password</label>
+<apex:inputSecret id="password" value="{!password}"/>
+<apex:commandButton id="loginButton" action="{!LoginUser}" value="Login"/>
+<apex:commandButton id="Register" action="{!Register}" value="Register"/>
+ </apex:pageBlockSection>
+      <div align="center">
+    </div>
+    </apex:pageBlock>
+    </apex:form>
+</apex:page>
+
+
+ 
+Old customer
+
+<apex:page controller="LoginPages" showHeader="false">
+   <div align="center" width="50px">
+   <apex:pagemessages ></apex:pagemessages>
+    <apex:stylesheet value="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"/>
+      
+      <apex:form >
+      <apex:pageBlock >
+      <div align="Center">
+      <apex:outputtext value="PLEASE CHECK YOUR DETAILS" style="font-size:26px; color:red; "/><BR/>
+       </div>
+        <apex:pageBlockSection showHeader="true" title="Personal Details" columns="1" collapsible="False">
+         <apex:outputText value="CustomerID: {!po.Name}"/>
+         <apex:outputText value="Salution : {!po.Salution__c}"/>
+         <apex:outputText value="Fist Name : {!po.First_Name__c}"/>
+         <apex:outputText value="Last Name : {!po.Last_Name__c}"/>
+         <apex:outputText value="Gender : {!po.Gender__c}"/>
+         <apex:outputText value="Date of Birth : {!po.DOB__c}"/>
+         <apex:outputText value="Age : {!po.Age__c}"/>
+         <apex:outputText value="Marital Staus: {!po.Marital_Status__c}"/>
+         <apex:outputText value="Email ID: {!po.Email_ID__c}"/>
+         <apex:outputText value="Mobile Number: {!po.Mobile_Number__c}"/>
+         <apex:outputText value="Address Line1: {!po.Address_Line1__c}"/>
+         <apex:outputText value="Address Line2: {!po.Address_Line2__c}"/>
+         <apex:outputText value="County: {!po.County__c}"/>
+         <apex:outputText value="Postal Code: {!po.Postal_Code__c }"/>
+         <apex:outputText value="Occupation: {!po.Occupation__c}"/>
+         <apex:outputText value="PlanID : {!o.Plan_ID__c}"/>
+         
+         <apex:outputText value="Plan Name : {!p.Plan_Name__c }"/
+      
+        </apex:pageBlockSection>
+      <div align="center">
+        
+        <apex:commandbutton value="RENEW"  action="{!Renew}" />
+        <apex:commandbutton value="Select New Plan"  action="{!n}" />
+    </div>
+    </apex:pageBlock>
+    </apex:form>
+   </div>
+</apex:page>
+ 
+Confirmation 
+
+<apex:page controller="LoginPages" showHeader="false">
+   <div align="center" width="50px">
+   <apex:pagemessages ></apex:pagemessages>
+    <apex:stylesheet value="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"/>
+      
+      <apex:form >
+      <apex:pageBlock >
+      <div align="Center">
+      <apex:outputtext value="PLEASE CONFIRM YOUR DETAILS" style="font-size:26px; color:red; "/><BR/>
+       </div>
+        <apex:pageBlockSection showHeader="true" title="Personal Details" columns="1" collapsible="False">
+         <apex:outputText value="Customer ID: {!o.CustomerID__c}"/>
+         <apex:outputText value="Employee ID: {!o.Employee_ID__c}"/>
+         <apex:outputText value="Plan Name: {!p.Plan_Name__c}"/>
+         <apex:outputText value="Plan Start Date: {!o.Plan_Start_Date__c}"/>
+         <apex:outputText value="Plan End Date: {!o.Plan_End_Date__c}"/>
+         <apex:outputText value="Premium Amount: {!o.Premium_Amount__c }"/>
+      
+        </apex:pageBlockSection>
+      <div align="center">
+        
+        <apex:commandbutton value="Submit"  action="{!Submit}"  oncomplete="showPopup()" />
+         
+        <script>
+function showPopup(){
+     alert('Enrollment is completed post completion of Transaction Management Policy will be activated with a postal copy of policy Document!');
+}
+</script>
+    </div>
+    </apex:pageBlock>
+    </apex:form>
+   </div>
+</apex:page>
+ 
+Plan
+
+<apex:page Controller="Plan"  showheader="False">
+
+    <apex:pagemessages ></apex:pagemessages>
+    <apex:stylesheet value="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"/>
+    <apex:form >
+<apex:pageBlock >
+<div align="Center">
+<apex:outputtext value="PLEASE SELECT YOUR PLAN" style="font-size:26px; color:red; "/><BR/>
+    </div>
+        <apex:pageBlockSection showHeader="true" title="Personal Details" columns="1" collapsible="False">
+        <label>Email ID</label>
+         <apex:inputText id="email" value="{!email}" style="width:300px;height:30px;"/>
+         <apex:inputField value="{!p.Choose_Plan__c}"  style="width:300px;height:30px;" Required="False"/>
+         <label>Please Type the Plan Prefix number from above Picklist</label>
+         <apex:inputText id="Plani" value="{!plani}" style="width:300px;height:30px;"/>
+        
+        </apex:pageBlockSection>
+      <div align="center">
+        
+        <apex:commandbutton value="SUBMIT"  action="{!Insertme}" />
+    </div>
+    </apex:pageBlock>
+    </apex:form>
+    </apex:page>
+ 
+New Customer Registration
+
+<apex:page Controller="customer" showheader="False">
+    <apex:pagemessages ></apex:pagemessages>
+    <apex:stylesheet value="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"/>
+       
+      <apex:form >
+<apex:pageBlock >
+<div align="Center">
+<apex:outputtext value="PLEASE ENTER YOUR DETAILS" style="font-size:26px; color:red; "/><BR/>
+    </div>
+        <apex:pageBlockSection showHeader="true" title="Personal Details" columns="1" collapsible="False">
+         <apex:inputField value="{!Customer.Salution__c}"  style="width:300px;height:30px;" Required="False"/>
+         <apex:inputField value="{!Customer.First_Name__c}"  style="width:300px;height:20px;" Required="True"/>
+         <apex:inputField value="{!Customer.Last_Name__c}"   style="width:300px;height:20px;" Required="False"/>
+         <apex:inputField value="{!Customer.Gender__c}"   style="width:300px;height:30px;" Required="True"/>
+         <apex:inputField value="{!Customer.DOB__c}"  style="width:300px;height:20px;" Required="True"/>
+         <apex:inputField value="{!Customer.Age__c}"  style="width:300px;height:20px;" Required="True"/>
+         <apex:inputField value="{!Customer.Marital_Status__c}"   style="width:300px;height:30px;" Required="False" />
+         
+         <apex:inputField value="{!Customer.Email_ID__c}"   style="width:300px;height:20px;" Required="True"/>
+         <apex:inputField value="{!Customer.Mobile_Number__c}"  style="width:300px;height:20px;" Required="True"/>
+         <apex:inputField value="{!Customer.Address_Line1__c}"   style="width:300px;height:20px;" Required="True"/>
+         <apex:inputField value="{!Customer.Address_Line2__c}"  style="width:300px;height:20px;" Required="True"/>
+         
+         <apex:inputField value="{!Customer.County__c}"  style="width:300px;height:30px;" Required="False"/>
+         <apex:inputField value="{!Customer.Postal_Code__c}"  style="width:300px;height:20px;" Required="False"/>
+         <apex:inputField value="{!Customer.Occupation__c}"  style="width:300px;height:30px;" Required="False"/>
+         <apex:inputField value="{!Customer.Employee_ID__c}"  style="width:300px;height:30px;" Required="False"/>
+          
+          <label>Password</label>
+         <apex:inputSecret id="password" value="{!Customer.Password__c}"/>
+    
+        </apex:pageBlockSection>
+      <div align="center">
+        
+        <apex:commandbutton value="Next"  action="{!Insertme}" />
+       
+    </div>
+    </apex:pageBlock>
+    </apex:form>
+    
+   
+    </apex:page>
+
+
+
+
+
+ 
+Plans for new customer
+
+<apex:page Controller="Plan"  showheader="False">
+    <apex:pagemessages ></apex:pagemessages>
+    <apex:stylesheet value="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"/>
+ 
+    <apex:form >
+<apex:pageBlock >
+<div align="Center">
+<apex:outputtext value="PLEASE SELECT YOUR PLAN" style="font-size:26px; color:red; "/><BR/>
+    </div>
+        <apex:pageBlockSection showHeader="true" title="Personal Details" columns="1" collapsible="False">
+        <label>Email ID</label>
+         <apex:inputText id="email" value="{!email}" style="width:300px;height:30px;"/>
+         <apex:inputField value="{!p.Choose_Plan__c}"  style="width:300px;height:30px;" Required="False"/>
+         <label>Please Type the Plan Prefix numbere from above Picklist</label>
+         <apex:inputText id="Plani" value="{!plani}" style="width:300px;height:30px;"/>
+        
+        </apex:pageBlockSection>
+      <div align="center">
+        
+        <apex:commandbutton value="SUBMIT"  action="{!Insertme}" />
+    </div>
+    </apex:pageBlock>
+    </apex:form>
+    </apex:page>
+ 
+Confirmation for New users
+
 <apex:page controller="Plan" showHeader="false">
    <div align="center" width="50px">
    <apex:pagemessages ></apex:pagemessages>
@@ -35,9 +245,8 @@ function showPopup(){
     </apex:form>
    </div>
 </apex:page>
-
-
-###Apex codes for Customer objects insertion
+ 
+Apex codes for Customer objects insertion
 
 public with sharing class customer {
 
@@ -56,7 +265,7 @@ Customer=new Customer__c();
 
 }
 
-##LoginPages
+LoginPages
 public class LoginPages {
 
     public PageReference Submit() {
@@ -64,7 +273,7 @@ public class LoginPages {
     }
 
 
-    //Register new user
+    Register new user
     public PageReference Register(){
         PageReference retUrl=page.Customer1; 
         return retUrl;
@@ -81,35 +290,30 @@ public class LoginPages {
     
    
     
- 
-    //User Login
+  User Login
     public PageReference LoginUser() 
     {
         PageReference retUrl = page.oldcus;
-        pos = [select Email_ID__c,Password__c from User__c where Email_ID__c=:username];       
+pos = [select Email_ID__c,Password__c from User__c where Email_ID__c=:username];       
         po = [select Name,First_Name__c,Last_Name__c,Salution__c,Gender__c,DOB__c,Age__c,Marital_Status__c,Email_ID__c,Mobile_Number__c,Address_Line1__c,Address_Line2__c,County__c,Occupation__c,Postal_Code__c from Customer__c where Email_ID__c=:username];
         cusid=po.Name;
         o = [select Plan_ID__c,CustomerID__c,Employee_ID__c,Plan_Start_Date__c,Plan_End_Date__c,Premium_Amount__c from Enrollment__c where CustomerID__c=:cusid];
         planid=o.Plan_ID__c;
-        p=[select Plan_Name__c from Plan__c where Name=:planid];
-        
-        
+        p=[select Plan_Name__c from Plan__c where Name=:planid]
         if(username=='{!pos.Email_ID__c}' && password=='{!pos.Password__c}'){
            return retUrl;  
         } 
         return retUrl;
     }
-     
     PageReference retUrl1= page.Confirmation;
      public PageReference Renew() {       
         return retUrl1;     
- 
     }
     PageReference retUrl2 = page.Planfinal;
      public PageReference n() {       
         return retUrl2 ;     
     }}
-##plan controller
+Plan controller
 
 public with sharing class Plan{
 
