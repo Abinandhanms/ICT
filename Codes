@@ -1,0 +1,158 @@
+###Confirmation for New users
+<apex:page controller="Plan" showHeader="false">
+   <div align="center" width="50px">
+   <apex:pagemessages ></apex:pagemessages>
+    <apex:stylesheet value="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css"/>
+      
+      <apex:form >
+      <apex:pageBlock >
+      <div align="Center">
+      <apex:outputtext value="PLEASE CONFIRM YOUR DETAILS" style="font-size:26px; color:red; "/><BR/>
+       </div>
+        <apex:pageBlockSection showHeader="true" title="Personal Details" columns="1" collapsible="False">
+         <apex:outputText value="Customer ID: {!ew.CustomerID__c}"/>
+         <apex:outputText value="Employee ID: {!ew.Employee_ID__c}"/>
+         <apex:outputText value="Plan Name: {!q.Plan_Name__c}"/>
+         <apex:outputText value="Premium Amount: {!ew.Premium_Amount__c }"/>
+         
+         <apex:inputField value="{!ew.Plan_Start_Date__c}"  style="width:300px;height:30px;" Required="False"/>
+         <apex:inputField value="{!ew.Plan_End_Date__c}"  style="width:300px;height:30px;" Required="False"/>
+         
+      
+        </apex:pageBlockSection>
+      <div align="center">
+        
+        <apex:commandbutton value="Submit"  action="{!Submit}"  oncomplete="showPopup()" />
+         
+        <script>
+function showPopup(){
+     alert('Enrollment is completed post completion of Transaction Management Policy will be activated with a postal copy of policy Document!');
+}
+</script>
+        
+    </div>
+    </apex:pageBlock>
+    </apex:form>
+   </div>
+</apex:page>
+
+
+###Apex codes for Customer objects insertion
+
+public with sharing class customer {
+
+public customer(){
+
+Customer=new Customer__c();
+
+}
+    PageReference retUrl = page.Planfinal;
+    public PageReference Insertme() {
+    
+    insert Customer; 
+        return retUrl;
+    }
+    public Customer__c Customer { get; set; }
+
+}
+
+##LoginPages
+public class LoginPages {
+
+    public PageReference Submit() {
+        return null;
+    }
+
+
+    //Register new user
+    public PageReference Register(){
+        PageReference retUrl=page.Customer1; 
+        return retUrl;
+    }
+
+    public String password { get; set; }
+    public String username { get; set; }
+    public User__c pos{get;set;}
+    public Customer__c po{get;set;}
+    public Plan__c p{get;set;}
+    public Enrollmentw__c o{get;set;}
+    public String cusid {get;set;}
+    public String planid {get;set;}
+    
+   
+    
+ 
+    //User Login
+    public PageReference LoginUser() 
+    {
+        PageReference retUrl = page.oldcus;
+        pos = [select Email_ID__c,Password__c from User__c where Email_ID__c=:username];       
+        po = [select Name,First_Name__c,Last_Name__c,Salution__c,Gender__c,DOB__c,Age__c,Marital_Status__c,Email_ID__c,Mobile_Number__c,Address_Line1__c,Address_Line2__c,County__c,Occupation__c,Postal_Code__c from Customer__c where Email_ID__c=:username];
+        cusid=po.Name;
+        o = [select Plan_ID__c,CustomerID__c,Employee_ID__c,Plan_Start_Date__c,Plan_End_Date__c,Premium_Amount__c from Enrollment__c where CustomerID__c=:cusid];
+        planid=o.Plan_ID__c;
+        p=[select Plan_Name__c from Plan__c where Name=:planid];
+        
+        
+        if(username=='{!pos.Email_ID__c}' && password=='{!pos.Password__c}'){
+           return retUrl;  
+        } 
+        return retUrl;
+    }
+     
+    PageReference retUrl1= page.Confirmation;
+     public PageReference Renew() {       
+        return retUrl1;     
+ 
+    }
+    PageReference retUrl2 = page.Planfinal;
+     public PageReference n() {       
+        return retUrl2 ;     
+    }}
+##plan controller
+
+public with sharing class Plan{
+
+    public String Items { get; set; }
+
+    public PageReference Submit() {
+        return null;
+    }
+
+
+   public Plan__c p{ get; set; }
+   public Plan__c q{ get; set; }
+   public String email{ get; set; }
+   public Customer__c pos{get;set;}
+   public String cusid{ get; set; }
+   public Enrollmentw__c ew{get;set;}
+   public String plan {get;set;}
+   public String selectedValue{get;set;}
+   public String plani{get;set;}
+   public String premium{get;set;}
+  
+   public plan (){
+
+   //  ew=new Enrollmentw__c (CustomerID__c='LHI10008',Employee_ID__c='EMP101',Plan_End_Date__c='12/12/2018',Plan_ID__c='PL8362',Plan_Start_Date__c='12/12/2018',Premium_Amount__c='1000');
+      
+   
+}
+    PageReference retUrl = page.ConfirmationFinal;
+    public PageReference Insertme() {
+       
+       q=[select Plan_Name__c,Pre__c from Plan__c where Name=:plani];
+       plan=q.Plan_Name__c;
+       pos=[select Email_ID__c,Name from Customer__c where Email_ID__c=:email];
+       cusid=pos.Name;
+       premium=String.valueOf(Double.valueOf(q.Pre__c));
+       
+       ew=new Enrollmentw__c (CustomerID__c=cusid,Employee_ID__c='EMP101',Plan_ID__c=plani,Premium_Amount__c=premium,Plan_End_Date__c='12/12/2018',Plan_Start_Date__c='12/12/2019');
+       insert ew;
+       //ew=[select Employee_ID__c,Plan_ID__c,Premium_Amount__c from Enrollmentw__c where CustomerID__c=:cusid];
+       //ew=[select Employee_ID__c,Plan_ID__c,Premium_Amount__c,CustomerID__c from Enrollmentw__c where CustomerID__c=:cusid];
+       return retUrl;     
+   
+    
+    }
+    
+}
